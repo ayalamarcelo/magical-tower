@@ -1,0 +1,67 @@
+html, body {
+    color: #339989;
+    background-color: #1c2128;
+    height: 99%;
+    font-size: 16px;
+    font-family: monospace;
+    overflow: auto;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  main {
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  
+  #user-input {
+    background-color: #1c2128;
+    font-family: monospace;
+    padding: 0;
+    margin: 0;
+    border: none;
+    resize: none;
+    outline: none;
+    font-size: 16px;
+    color: #e6ebe0;
+    caret-color: #e6ebe0;
+    width: 50%;
+  }
+  
+  main::-webkit-scrollbar {
+    display: none;
+  }
+  
+  p {
+    display: block;
+    line-height: 22px;
+    animation: typing 0.5s steps(30, end);
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  
+  div {
+    line-height: 22px;
+  }
+  
+  pre {
+    margin: 0;
+    padding: 0;
+    line-height: 20px;
+    color: #aaf683;
+    font-family: monospace;
+  }
+  
+
+@keyframes typing {
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 100%;
+    }
+}
