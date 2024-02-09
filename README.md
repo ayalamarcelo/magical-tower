@@ -1,10 +1,10 @@
 <h1 align="center">Magical Code Tower</h1>
 
-![Magical Tower](./assets/magical_tower.png)
-
 ## Descripción
 
 Magical Tower es un juego de rol (RPG) en el que los jugadores se aventuran en una torre mágica llena de peligros y tesoros. Sumérgete en un mundo de fantasía, donde cada piso de la torre presenta desafíos únicos, enemigos formidables y secretos por descubrir.
+
+![Magical Tower](./assets/magical_tower.png)
 
 ## Instalación y Uso
 
@@ -13,18 +13,18 @@ Magical Tower es un juego de rol (RPG) en el que los jugadores se aventuran en u
 
 ## Contribución
 
-Indica cómo pueden contribuir otros al proyecto. Esto podría incluir instrucciones para clonar el repositorio, cómo configurar el entorno de desarrollo, pautas para enviar solicitudes de extracción `(pull requests)`, etc.
+¡Gracias por considerar contribuir a este proyecto! Tu ayuda es bienvenida.
+Para contribuir, sigue estos pasos:
 
-1. Haz un fork del proyecto
-2. Crea una nueva rama (git checkout -b feature/nueva-funcionalidad)
-3. Realiza tus cambios y haz commits (git commit -am 'Agrega nueva funcionalidad')
-4. Sube tus cambios (git push origin feature/nueva-funcionalidad)
-5. Abre una solicitud de extracción (pull request)
+ - Realiza un fork del repositorio.
+ - Clona tu fork localmente: git clone <url_del_repositorio_fork>.
+ - Crea una nueva rama para tu contribución: git checkout -b mi-contribucion.
+ - Realiza tus cambios y commits. Utiliza [gitmoji](https://gitmoji.dev/) para añadir emojis descriptivos a tus commits que reflejen su propósito. Por ejemplo, usa :bug: para correcciones de errores, :sparkles: para nuevas características, :pencil: para cambios en la documentación, etc.
+ - Empuja tu rama a tu fork: git push origin mi-contribucion.
+ - Abre un pull request hacia la rama principal del repositorio original.
+
+Por favor, asegúrate de que tus cambios respeten el estilo de codificación existente y sean compatibles con la meta del proyecto. ¡Esperamos con interés revisar tus contribuciones!
 
 ## Soporte
 
 Para obtener ayuda con el juego, contacta con nuestro equipo de soporte en [support@magicaltower.com](mailto:support@magicaltower.com)
-
-## Licencia
-
-Este juego está bajo la licencia **MIT**. Consulta el archivo LICENSE para más detalles.

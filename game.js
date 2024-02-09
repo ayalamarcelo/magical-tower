@@ -17,7 +17,7 @@ const asciiArt = [
     "              __                            _||_   |",
     "     ____--`~    '--~~__            __ ----~    ~`---,              ___",
     "-~--~                   ~---__ ,--~'                  ~~----_____-~'   `~----~~",
-    "Welcome to Magical Tower [Version 1.0.22621.3007]",
+    "Welcome to Magical Code Tower [Version 1.0.22621.3007]",
     "For a list of available commands, type 'help'.",
 ];
 
