@@ -1,4 +1,4 @@
-<h1 align="center">Magical Tower</h1>
+<h1 align="center">Magical Code Tower</h1>
 
 ![Magical Tower](./assets/magical_tower.png)
 
