@@ -17,7 +17,7 @@ const asciiArt = [
     "              __                            _||_   |",
     "     ____--`~    '--~~__            __ ----~    ~`---,              ___",
     "-~--~                   ~---__ ,--~'                  ~~----_____-~'   `~----~~",
-    "Welcome to Magical Code Tower [Version 1.0.22621.3007]",
+    "Welcome to Magical Code Tower [Version Alfa]",
     "For a list of available commands, type 'help'.",
 ];
 
@@ -29,13 +29,16 @@ document.getElementById("user-input").addEventListener("keypress", function (eve
 
         switch (userInput) {
             case "help":
-                displayOutput("What do you want to do: [ explore ] [ attack ] [ stats ] [ clear ]");
+                displayOutput("What do you want to do: [ explore ] [ attack ] [ use potion ] [ stats ] [ clear ]");
                 break;
             case "explore":
                 explore();
                 break;
             case "attack":
                 attack();
+                break;
+            case "use potion":
+                usePotion();
                 break;
             case "stats":
                 displayStats();
@@ -61,46 +64,97 @@ function clearOutput() {
     document.getElementById("output").innerHTML = "";
 }
 
-function explore() {
-    displayOutput("You are exploring the area...");
-    // Simulated random events during exploration
-    let event = Math.random();
-    if (event < 0.5) {
-        displayOutput("You found a treasure chest!");
-    } else {
-        displayOutput("You encountered a monster!");
-        // Simulate combat with a monster
-        let monsterHealth = Math.floor(Math.random() * 100) + 1;
-        let playerDamage = Math.floor(Math.random() * 50) + 1;
-        let monsterDamage = Math.floor(Math.random() * 20) + 1;
-        let playerHealth = 100;
+let playerHealth = 100;
+let playerGold = 0;
+let potionCount = 0;
+let enemyPresent = false;
+let goblinHealth = 50;
 
-        while (playerHealth > 0 && monsterHealth > 0) {
-            displayOutput(`You attack the monster for ${playerDamage} damage!`);
-            monsterHealth -= playerDamage;
-            if (monsterHealth <= 0) {
-                displayOutput("You defeated the monster!");
-                // Award experience points and possibly level up the player
-                break;
+function explore() {
+    if (enemyPresent) {
+        displayOutput("You are already in combat!");
+    } else {
+        displayOutput("You are exploring the area...");
+
+        let event = Math.random();
+        if (event < 0.3) {
+            let treasureEvent = Math.random();
+            if (treasureEvent < 0.4) {
+                displayOutput("You found a treasure chest!");
+                let treasureType = Math.random();
+                if (treasureType < 0.3) {
+                    let goldAmount = Math.floor(Math.random() * 50) + 10;
+                    playerGold += goldAmount;
+                    displayOutput(`You found ${goldAmount} gold coins!`);
+                } else if (treasureType < 0.6) {
+                    potionCount++;
+                    displayOutput("You found a health potion!");
+                } else {
+                    let healthAmount = Math.floor(Math.random() * 20) + 10;
+                    playerHealth += healthAmount;
+                    displayOutput(`You found a health pack and gained ${healthAmount} health!`);
+                }
+            } else {
+                displayOutput("You encountered a Goblin!");
+                enemyPresent = true;
+                displayOutput("You are now in combat with the Goblin!");
+                goblinAttack();
             }
-            displayOutput(`The monster attacks you for ${monsterDamage} damage!`);
-            playerHealth -= monsterDamage;
-            if (playerHealth <= 0) {
-                displayOutput("You have been defeated!");
-                break;
-            }
+        } else {
+            displayOutput("You didn't find anything of interest.");
         }
     }
 }
 
-function attack() {
-    displayOutput("You are attacking...");
-    // Placeholder for combat mechanics
+function displayStats() {
+    displayOutput(`Player Stats:
+    Health: ${playerHealth}
+    Gold: ${playerGold}
+    Health Potions: ${potionCount}`);
 }
 
-function displayStats() {
-    displayOutput("Player Stats:");
-    // Placeholder for displaying player stats
+function attack() {
+    if (enemyPresent) {
+        let playerDamage = Math.floor(Math.random() * 20) + 10;
+        goblinHealth -= playerDamage;
+        displayOutput(`You attacked the Goblin for ${playerDamage} damage!`);
+        if (goblinHealth <= 0) {
+            displayOutput("You defeated the Goblin!");
+            enemyPresent = false;
+            goblinHealth = 50;
+        } else {
+            goblinAttack();
+        }
+    } else {
+        displayOutput("There's nothing to attack!");
+    }
+}
+
+function goblinAttack() {
+    let goblinDamage = Math.floor(Math.random() * 10) + 5;
+    playerHealth -= goblinDamage;
+    displayOutput(`The Goblin attacked you for ${goblinDamage} damage!`);
+    if (playerHealth <= 0) {
+        displayOutput("You have been defeated!");
+        playerHealth = 100;
+        playerGold = 0;
+        potionCount = 0;
+        displayOutput("You respawned at the starting point with full health, but lost all your gold and potions!");
+    }
+}
+
+function usePotion() {
+    if (potionCount > 0) {
+        playerHealth += 30;
+        if (playerHealth > 100) {
+            playerHealth = 100;
+        }
+        potionCount--;
+        displayOutput("You used a health potion!");
+        displayOutput(`Your health is now ${playerHealth}`);
+    } else {
+        displayOutput("You don't have any health potions!");
+    }
 }
 
 const preElement = document.createElement('pre');
