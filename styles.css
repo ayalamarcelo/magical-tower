@@ -1,6 +1,6 @@
 html, body {
-    color: #339989;
-    background-color: #1c2128;
+    color: #66FF66;
+    background-color: #001900;
     height: 99%;
     font-size: 16px;
     font-family: monospace;
@@ -18,7 +18,7 @@ html, body {
   }
   
   #user-input {
-    background-color: #1c2128;
+    background-color: #001900;
     font-family: monospace;
     padding: 0;
     margin: 0;
@@ -26,8 +26,8 @@ html, body {
     resize: none;
     outline: none;
     font-size: 16px;
-    color: #e6ebe0;
-    caret-color: #e6ebe0;
+    color: #E5FFE5;
+    caret-color: #E5FFE5;
     width: 50%;
   }
   
@@ -51,7 +51,7 @@ html, body {
     margin: 0;
     padding: 0;
     line-height: 20px;
-    color: #aaf683;
+    color: #00FF00;
     font-family: monospace;
   }
   
