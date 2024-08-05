@@ -13,7 +13,7 @@ body {
 }
 
 .computer {
-  width: 50vw;
+  width: 52vw;
   height: 90vh;
   display: flex;
   flex-direction: column;
@@ -22,7 +22,7 @@ body {
 
 .screen {
   flex: 1;
-  padding: 70px;
+  padding: 60px;
   overflow-y: auto;
   background-size: 100% 7px;
   overflow: hidden;
