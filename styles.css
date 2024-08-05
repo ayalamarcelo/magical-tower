@@ -1,67 +1,110 @@
-html, body {
-    color: #66FF66;
-    background-color: #001900;
-    height: 99%;
-    font-size: 16px;
-    font-family: monospace;
-    overflow: auto;
-    padding: 20px;
-    box-sizing: border-box;
-  }
-  
-  main {
-    height: 100%;
-    overflow-y: auto;
-    overflow-x: hidden;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-  }
-  
-  #user-input {
-    background-color: #001900;
-    font-family: monospace;
-    padding: 0;
-    margin: 0;
-    border: none;
-    resize: none;
-    outline: none;
-    font-size: 16px;
-    color: #E5FFE5;
-    caret-color: #E5FFE5;
-    width: 50%;
-  }
-  
-  main::-webkit-scrollbar {
-    display: none;
-  }
-  
-  p {
-    display: block;
-    line-height: 22px;
-    animation: typing 0.5s steps(30, end);
-    white-space: nowrap;
-    overflow: hidden;
-  }
-  
-  div {
-    line-height: 22px;
-  }
-  
-  pre {
-    margin: 0;
-    padding: 0;
-    line-height: 20px;
-    color: #00FF00;
-    font-family: monospace;
-  }
-  
+body {
+  font-family: monospace;
+  color: #e0e1dd;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow-y: hidden;
+  background: linear-gradient(to bottom, #232323 50%, #415a77 40px);
+  background-size: 100% 7px;
+}
 
-@keyframes typing {
-    from {
-        width: 0;
-    }
+.computer {
+  width: 50vw;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  background-color: transparent;
+}
 
-    to {
-        width: 100%;
-    }
+.screen {
+  flex: 1;
+  padding: 70px;
+  overflow-y: auto;
+  background-size: 100% 7px;
+  overflow: hidden;
+}
+
+#output {
+  white-space: pre;
+}
+
+.input {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.prompt {
+  font-size: 1.3em;
+  margin-right: 5px;
+}
+
+input {
+  font-family: monospace;
+  border: none;
+  background: transparent;
+  color: #e0e1dd;
+  width: 100%;
+  font-size: 1em;
+  outline: none;
+}
+
+.ascii-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.container {
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.drop {
+  position: absolute;
+  width: 2px;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  opacity: 0.2;
+  animation: fall 1s linear infinite;
+}
+
+@keyframes fall {
+  from {
+      transform: translate(0, -100px) rotate(-10deg);
+      opacity: 0;
+  }
+  to {
+      transform: translate(0, 70vh) rotate(10deg);
+      opacity: 1;
+  }
+}
+
+.lightning {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 20vw;
+  height: 100vh;
+  opacity: 0;
+  z-index: 10;
+  transform: translateX(-50%);
+  animation: flash 0.2s ease-in-out;
+}
+
+@keyframes flash {
+  0%,
+  100% {
+      opacity: 0;
+  }
+  50% {
+      opacity: 0.5;
+  }
 }

@@ -1,24 +1,32 @@
 const container = document.getElementById('bannerSpan');
 
 const asciiArt = [
-    "                                                |>>>",
-    "                                                |",
-    "                                            _  _|_  _",
-    "                                           |;|_|;|_|;|",
-    "                                           \\\\.    .  /",
-    "                                            \\\\:  .  /",
-    "                                             ||:   |",
-    "                                             ||:.  |",
-    "                                             ||:  .|",
-    "                                             ||:   |       \\,/",
-    "                                             ||: , |            /`\\",
-    "                                             ||:   |",
-    "                                             ||: . |",
-    "              __                            _||_   |",
-    "     ____--`~    '--~~__            __ ----~    ~`---,              ___",
+    "             ░▀█▀░█░█░█▀▀░░░█░░░▀█▀░█▀▀░█░█░▀█▀░█░█░█▀█░█░█░█▀▀░█▀▀",
+    "             ░░█░░█▀█░█▀▀░░░█░░░░█░░█░█░█▀█░░█░░█▀█░█░█░█░█░▀▀█░█▀▀",
+    "             ░░▀░░▀░▀░▀▀▀░░░▀▀▀░▀▀▀░▀▀▀░▀░▀░░▀░░▀░▀░▀▀▀░▀▀▀░▀▀▀░▀▀▀",
+    "                                        ",
+    "                          db            ",
+    "                  .-='- ._][_.      .--==-,",
+    "                 (_  (  _IIII_   _(    )  `.",
+    "                  (     |\" \" |-.(  ` ,_  `  )",
+    "                    '-._HHHHHH  `)---' `'--'    ",
+    "                        |.   |--`                    ",
+    "                        |    |       ",
+    "                        |    |",
+    "              _H___,=====;___|               ",
+    "           n_/____/____/``\\__\\",
+    "          /__|:: :|. .|:::|::|",
+    "       _%&|__&%_\"_|_\"_|_ H|__|__",
+    "         `\";;;;\"\";;;;'\";;'\"\"\"';;;;``;;-.",
+    "      .  ' `\";';  `;;;  `;'   `;  .`' `\\:::::::::",
+    "                          . '  .  `' .  `';. :::::::::::::::",
+    ". '  .  `' .  `';.    '   .   .  |^-`^~_^^~``-^^_~^^-`^~ ::::::::::::::::::::::::::::::",
+    "     ____--`~    '--~~__ :::::::::::::::__ ----~    ~`---, ::::::::::::::::::::::::::::::___",
     "-~--~                   ~---__ ,--~'                  ~~----_____-~'   `~----~~",
-    "Welcome to Magical Code Tower [Version Alfa]",
-    "For a list of available commands, type 'help'.",
+    "",
+    "",
+    "                  [For a list of available commands, type 'help'.]",
+    ""
 ];
 
 document.getElementById("user-input").addEventListener("keypress", function (event) {
@@ -29,13 +37,19 @@ document.getElementById("user-input").addEventListener("keypress", function (eve
 
         switch (userInput) {
             case "help":
-                displayOutput("What do you want to do: [ explore ] [ attack ] [ use potion ] [ stats ] [ clear ]");
+                displayOutput("What do you want to do: [ explore ] [ explore out ] [ attack ] [ hide ] [ use potion ] [ stats ] [ clear ] [ buy ]");
                 break;
             case "explore":
                 explore();
                 break;
+            case "explore out":
+                explore("out");
+                break;
             case "attack":
                 attack();
+                break;
+            case "hide":
+                hide();
                 break;
             case "use potion":
                 usePotion();
@@ -45,6 +59,13 @@ document.getElementById("user-input").addEventListener("keypress", function (eve
                 break;
             case "clear":
                 clearOutput();
+                break;
+            case "buy":
+                displayOutput("What do you want to buy: [ sword ] (100 gold) [ health potion ] (50 gold)");
+                break;
+            case "sword":
+            case "health potion":
+                buy(userInput);
                 break;
             default:
                 displayOutput(`${userInput}: Command not recognized`);
@@ -69,39 +90,48 @@ let playerGold = 0;
 let potionCount = 0;
 let enemyPresent = false;
 let goblinHealth = 50;
+let dagonHealth = 70;
+let items = {
+    sword: { price: 100, damage: 30 },
+    healthPotion: { price: 50, heal: 30 }
+};
 
-function explore() {
+function explore(command = "in") {
     if (enemyPresent) {
         displayOutput("You are already in combat!");
     } else {
-        displayOutput("You are exploring the area...");
+        if (command === "out") {
+            displayOutput("Its raining!...");
+        } else {
+            displayOutput("You are exploring the area...");
 
-        let event = Math.random();
-        if (event < 0.3) {
-            let treasureEvent = Math.random();
-            if (treasureEvent < 0.4) {
-                displayOutput("You found a treasure chest!");
-                let treasureType = Math.random();
-                if (treasureType < 0.3) {
-                    let goldAmount = Math.floor(Math.random() * 50) + 10;
-                    playerGold += goldAmount;
-                    displayOutput(`You found ${goldAmount} gold coins!`);
-                } else if (treasureType < 0.6) {
-                    potionCount++;
-                    displayOutput("You found a health potion!");
+            let event = Math.random();
+            if (event < 0.3) {
+                let treasureEvent = Math.random();
+                if (treasureEvent < 0.4) {
+                    displayOutput("You found a treasure chest!");
+                    let treasureType = Math.random();
+                    if (treasureType < 0.3) {
+                        let goldAmount = Math.floor(Math.random() * 50) + 10;
+                        playerGold += goldAmount;
+                        displayOutput(`You found ${goldAmount} gold coins!`);
+                    } else if (treasureType < 0.6) {
+                        potionCount++;
+                        displayOutput("You found a health potion!");
+                    } else {
+                        let healthAmount = Math.floor(Math.random() * 20) + 10;
+                        playerHealth += healthAmount;
+                        if (playerHealth > 100) playerHealth = 100;
+                        displayOutput(`You found a health pack and gained ${healthAmount} health!`);
+                    }
                 } else {
-                    let healthAmount = Math.floor(Math.random() * 20) + 10;
-                    playerHealth += healthAmount;
-                    displayOutput(`You found a health pack and gained ${healthAmount} health!`);
+                    displayOutput("You encountered Dagon!");
+                    enemyPresent = true;
+                    displayOutput("You are now in combat with Dagon! What do you want to do: [ attack ] [ hide ]");
                 }
             } else {
-                displayOutput("You encountered a Goblin!");
-                enemyPresent = true;
-                displayOutput("You are now in combat with the Goblin!");
-                goblinAttack();
+                displayOutput("You didn't find anything of interest.");
             }
-        } else {
-            displayOutput("You didn't find anything of interest.");
         }
     }
 }
@@ -116,30 +146,63 @@ function displayStats() {
 function attack() {
     if (enemyPresent) {
         let playerDamage = Math.floor(Math.random() * 20) + 10;
-        goblinHealth -= playerDamage;
-        displayOutput(`You attacked the Goblin for ${playerDamage} damage!`);
-        if (goblinHealth <= 0) {
-            displayOutput("You defeated the Goblin!");
+        dagonHealth -= playerDamage;
+        displayOutput(`You attacked Dagon for ${playerDamage} damage!`);
+        if (dagonHealth <= 0) {
+            displayOutput("You defeated Dagon!");
             enemyPresent = false;
-            goblinHealth = 50;
+            dagonHealth = 70;
+
+            // Dagon drops treasures or gold
+            let dropEvent = Math.random();
+            if (dropEvent < 0.4) {
+                let goldAmount = Math.floor(Math.random() * 100) + 50;
+                playerGold += goldAmount;
+                displayOutput(`Dagon dropped ${goldAmount} gold coins!`);
+            } else if (dropEvent < 0.7) {
+                potionCount++;
+                displayOutput("Dagon dropped a health potion!");
+            } else {
+                let healthAmount = Math.floor(Math.random() * 50) + 20;
+                playerHealth += healthAmount;
+                if (playerHealth > 100) playerHealth = 100;
+                displayOutput(`Dagon dropped a health pack and you gained ${healthAmount} health!`);
+            }
         } else {
-            goblinAttack();
+            dagonAttack();
         }
     } else {
         displayOutput("There's nothing to attack!");
     }
 }
 
-function goblinAttack() {
-    let goblinDamage = Math.floor(Math.random() * 10) + 5;
-    playerHealth -= goblinDamage;
-    displayOutput(`The Goblin attacked you for ${goblinDamage} damage!`);
+function dagonAttack() {
+    let dagonDamage = Math.floor(Math.random() * 15) + 5;
+    playerHealth -= dagonDamage;
+    displayOutput(`Dagon attacked you for ${dagonDamage} damage!`);
     if (playerHealth <= 0) {
         displayOutput("You have been defeated!");
         playerHealth = 100;
         playerGold = 0;
         potionCount = 0;
         displayOutput("You respawned at the starting point with full health, but lost all your gold and potions!");
+    }
+}
+
+
+function hide() {
+    if (enemyPresent) {
+        let hideSuccess = Math.random() < 0.5;
+        if (hideSuccess) {
+            displayOutput("You successfully hide from Dagon!");
+            enemyPresent = false;
+            dagonHealth = 70;
+        } else {
+            displayOutput("You failed to hide. Dagon found you!");
+            dagonAttack();
+        }
+    } else {
+        displayOutput("There's nothing to hide from!");
     }
 }
 
@@ -154,6 +217,25 @@ function usePotion() {
         displayOutput(`Your health is now ${playerHealth}`);
     } else {
         displayOutput("You don't have any health potions!");
+    }
+}
+
+function buy(item) {
+    if (items[item]) {
+        if (playerGold >= items[item].price) {
+            playerGold -= items[item].price;
+            if (item === "health potion") {
+                potionCount++;
+                displayOutput("You bought a health potion!");
+            } else if (item === "sword") {
+                displayOutput("You bought a sword! It will increase your attack damage.");
+                // Aquí puedes agregar funcionalidad para aumentar el daño del jugador
+            }
+        } else {
+            displayOutput("You don't have enough gold!");
+        }
+    } else {
+        displayOutput("Item not recognized!");
     }
 }
 

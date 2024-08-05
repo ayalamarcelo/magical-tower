@@ -1,0 +1,16 @@
+{
+  "name": "the_lighthouse",
+  "version": "1.0.0",
+  "description": "- Fork the repository.\r - Clone your fork locally: git clone <url>.\r - Create a new branch for your contribution: git checkout -b my-contribution.\r - Make your changes and commits. Use gitmoji to add descriptive emojis to your commits reflecting their purpose. For example, use   :bug: for bug fixes, :sparkles: for new features, :pencil: for documentation updates, etc.\r - Push your branch to your fork: git push origin my-contribution.\r - Open a pull request to the main branch of the original repository.",
+  "main": "bg.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "npx gh-pages -d ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "gh-pages": "^6.1.1"
+  }
+}
