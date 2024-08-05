@@ -1,9 +1,9 @@
 const container = document.getElementById('bannerSpan');
 
 const asciiArt = [
-    "             ░▀█▀░█░█░█▀▀░░░█░░░▀█▀░█▀▀░█░█░▀█▀░█░█░█▀█░█░█░█▀▀░█▀▀",
-    "             ░░█░░█▀█░█▀▀░░░█░░░░█░░█░█░█▀█░░█░░█▀█░█░█░█░█░▀▀█░█▀▀",
-    "             ░░▀░░▀░▀░▀▀▀░░░▀▀▀░▀▀▀░▀▀▀░▀░▀░░▀░░▀░▀░▀▀▀░▀▀▀░▀▀▀░▀▀▀",
+    "                 ░▀█▀░█░█░█▀▀░░░█░░░▀█▀░█▀▀░█░█░▀█▀░█░█░█▀█░█░█░█▀▀░█▀▀",
+    "                 ░░█░░█▀█░█▀▀░░░█░░░░█░░█░█░█▀█░░█░░█▀█░█░█░█░█░▀▀█░█▀▀",
+    "                 ░░▀░░▀░▀░▀▀▀░░░▀▀▀░▀▀▀░▀▀▀░▀░▀░░▀░░▀░▀░▀▀▀░▀▀▀░▀▀▀░▀▀▀",
     "                                        ",
     "                          db            ",
     "                  .-='- ._][_.      .--==-,",
@@ -28,6 +28,73 @@ const asciiArt = [
     "                  [For a list of available commands, type 'help'.]",
     ""
 ];
+
+const enemies = {
+    seaSerpent: {
+        name: "Sea Serpent",
+        health: 100,
+        damage: 20,
+        specialAbility: "Tail Swipe",
+        description: "A fearsome serpent of the deep sea."
+    },
+    ghostPirate: {
+        name: "Ghost Pirate",
+        health: 80,
+        damage: 15,
+        specialAbility: "Phantom Slash",
+        description: "The vengeful spirit of a long-dead pirate."
+    },
+    kraken: {
+        name: "Kraken",
+        health: 150,
+        damage: 25,
+        specialAbility: "Tentacle Slam",
+        description: "A colossal sea monster with immense strength."
+    },
+    drownedMariner: {
+        name: "Drowned Mariner",
+        health: 90,
+        damage: 18,
+        specialAbility: "Spectral Lunge",
+        description: "The ghost of a sailor lost at sea, forever seeking vengeance."
+    },
+    cursedCaptain: {
+        name: "Cursed Captain",
+        health: 110,
+        damage: 22,
+        specialAbility: "Haunting Command",
+        description: "A once-mighty captain now cursed to roam the seas as a malevolent spirit."
+    },
+    wraithOfTheDeep: {
+        name: "Wraith of the Deep",
+        health: 120,
+        damage: 20,
+        specialAbility: "Chilling Gaze",
+        description: "An eerie wraith that can freeze its victims with a mere glance."
+    },
+    phantomMariner: {
+        name: "Phantom Mariner",
+        health: 85,
+        damage: 17,
+        specialAbility: "Ghostly Strike",
+        description: "A spectral sailor who attacks with eerie precision."
+    },
+    seaWitch: {
+        name: "Sea Witch",
+        health: 95,
+        damage: 19,
+        specialAbility: "Tidal Curse",
+        description: "A malevolent sea witch who uses dark magic to curse her foes."
+    },
+    revenantCorsair: {
+        name: "Revenant Corsair",
+        health: 105,
+        damage: 21,
+        specialAbility: "Blade of Shadows",
+        description: "A cursed corsair who attacks with shadowy blades."
+    }
+};
+
 
 document.getElementById("user-input").addEventListener("keypress", function (event) {
     if (event.key === "Enter") {
@@ -89,7 +156,7 @@ function clearOutput() {
 let playerHealth = 100;
 let playerGold = 0;
 let potionCount = 0;
-let oilBottleCount = 0; // Inicialmente en 0
+let oilBottleCount = 0;
 let enemyPresent = false;
 let dagonHealth = 60;
 let items = {
@@ -98,12 +165,22 @@ let items = {
     "oil bottle": { price: 25, damage: 0 }
 };
 
+let selectedEnemy = null;
+
 function explore(command = "in") {
     if (enemyPresent) {
         displayOutput("You are already in combat!");
     } else {
         if (command === "out") {
             displayOutput("It's raining!...");
+
+            const enemyKeys = Object.keys(enemies);
+            const randomKey = enemyKeys[Math.floor(Math.random() * enemyKeys.length)];
+            selectedEnemy = enemies[randomKey];
+
+            displayOutput(`You encountered ${selectedEnemy.name}!`);
+            enemyPresent = true;
+            displayOutput(`You are now in combat with ${selectedEnemy.name}! What do you want to do: [ attack ] [ hide ]`);
         } else {
             displayOutput("You are exploring the area...");
 
@@ -117,6 +194,7 @@ function explore(command = "in") {
                         let goldAmount = Math.floor(Math.random() * 50) + 10;
                         playerGold += goldAmount;
                         displayOutput(`You found ${goldAmount} gold coins!`);
+                        displayStats();
                     } else if (treasureType < 0.6) {
                         potionCount++;
                         displayOutput("You found a health potion!");
@@ -127,9 +205,7 @@ function explore(command = "in") {
                         displayOutput(`You found a health pack and gained ${healthAmount} health!`);
                     }
                 } else {
-                    displayOutput("You encountered Dagon!");
-                    enemyPresent = true;
-                    displayOutput("You are now in combat with Dagon! What do you want to do: [ attack ] [ hide ]");
+                    displayOutput("You didn't find anything of interest.");
                 }
             } else {
                 displayOutput("You didn't find anything of interest.");
@@ -147,29 +223,29 @@ function displayStats() {
 }
 
 function attack() {
-    if (enemyPresent) {
+    if (enemyPresent && selectedEnemy) {
         let playerDamage = Math.floor(Math.random() * 20) + 10;
-        dagonHealth -= playerDamage;
-        displayOutput(`You attacked Dagon for ${playerDamage} damage!`);
-        if (dagonHealth <= 0) {
-            displayOutput("You defeated Dagon!");
+        selectedEnemy.health -= playerDamage;
+        displayOutput(`You attacked ${selectedEnemy.name} for ${playerDamage} damage!`);
+        if (selectedEnemy.health <= 0) {
+            displayOutput(`You defeated ${selectedEnemy.name}!`);
             enemyPresent = false;
-            dagonHealth = 60;
+            selectedEnemy = null;
 
-            // Dagon drops treasures or gold
             let dropEvent = Math.random();
             if (dropEvent < 0.4) {
                 let goldAmount = Math.floor(Math.random() * 100) + 50;
                 playerGold += goldAmount;
-                displayOutput(`Dagon dropped ${goldAmount} gold coins!`);
+                displayOutput(`${selectedEnemy.name} dropped ${goldAmount} gold coins!`);
+                displayStats();
             } else if (dropEvent < 0.7) {
                 potionCount++;
-                displayOutput("Dagon dropped a health potion!");
+                displayOutput(`${selectedEnemy.name} dropped a health potion!`);
             } else {
                 let healthAmount = Math.floor(Math.random() * 50) + 20;
                 playerHealth += healthAmount;
                 if (playerHealth > 100) playerHealth = 100;
-                displayOutput(`Dagon dropped a health pack and you gained ${healthAmount} health!`);
+                displayOutput(`${selectedEnemy.name} dropped a health pack and you gained ${healthAmount} health!`);
             }
         } else {
             dagonAttack();
@@ -180,15 +256,17 @@ function attack() {
 }
 
 function dagonAttack() {
-    let dagonDamage = Math.floor(Math.random() * 15) + 5;
-    playerHealth -= dagonDamage;
-    displayOutput(`Dagon attacked you for ${dagonDamage} damage!`);
-    if (playerHealth <= 0) {
-        displayOutput("You have been defeated!");
-        playerHealth = 100;
-        playerGold = 0;
-        potionCount = 0;
-        displayOutput("You respawned at the starting point with full health, but lost all your gold and potions!");
+    if (enemyPresent && selectedEnemy) {
+        let enemyDamage = Math.floor(Math.random() * 15) + 5;
+        playerHealth -= enemyDamage;
+        displayOutput(`${selectedEnemy.name} attacked you for ${enemyDamage} damage!`);
+        if (playerHealth <= 0) {
+            displayOutput("You have been defeated!");
+            playerHealth = 100;
+            playerGold = 0;
+            potionCount = 0;
+            displayOutput("You respawned at the starting point with full health, but lost all your gold and potions!");
+        }
     }
 }
 

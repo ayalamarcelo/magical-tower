@@ -22,9 +22,8 @@ body {
 
 .screen {
   flex: 1;
-  padding: 60px;
+  padding: 10px 60px 60px 60px;
   overflow-y: auto;
-  background-size: 100% 7px;
   overflow: hidden;
 }
 
@@ -39,7 +38,7 @@ body {
 }
 
 .prompt {
-  font-size: 1.3em;
+  font-size: 1em;
   margin-right: 5px;
 }
 
